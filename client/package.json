@@ -6,12 +6,16 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "emoji-picker-react": "^3.2.4",
     "query-string": "^6.13.6",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-input-emoji": "^2.1.0",
+    "react-outside-click-handler": "^1.3.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-textarea-autosize": "^8.2.0",
+    "react-toastify": "^6.1.0",
     "socket.io-client": "^2.3.1"
   },
   "scripts": {
@@ -34,5 +38,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "This app use React on the front end, with NodeJS + Socket.io web socket library on the back end.",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC"
 }

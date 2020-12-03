@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
 import io from 'socket.io-client';
-import { Messages, UsersBar } from './'
-import InputEmoji from "react-input-emoji";
+import { Link } from 'react-router-dom';
+import { Messages, UsersBar } from './';
+import Picker from "emoji-picker-react";
+import TextareaAutosize from 'react-textarea-autosize';
+import OutsideClickHandler from 'react-outside-click-handler';
+import '../resources/Home.css';
 
 const ENDPOINT = 'https://realtim-chat-project.herokuapp.com/';
 let socket;
@@ -13,8 +17,38 @@ const Chat = ({location}) => {
     const [message, setMessage] = useState('')
     const [messages, setMessages] = useState([])
     const [users, setUsers] = useState([])
+    const [show, setShow] = useState(false)
 
-    const sendMessage = (message) => {
+    const handleEmoji = () => {
+        setShow(!show)
+    }
+
+    const handleOutSideClick = () => {
+        if(show){
+            setShow(!show)
+        }
+    }
+
+    const onChangeMessage = (e) => {
+        setMessage(e.target.value)
+    }
+
+    const onEmojiClick = (event, emojiObject) => {
+        setMessage(message + emojiObject.emoji)
+    }
+
+    const sendMessage = (e) => {     
+        if(e.keyCode === 13 && (e.shiftKey || e.altKey)){
+            setMessage(message + '\r\n');
+        }
+        if(e.keyCode === 13 && (!e.shiftKey && !e.altKey)){
+            socket.emit('sendMessage', message, ()=> {
+                setMessage('')
+            })
+        }
+    }
+
+    const clickSendMessage = (e) => {
         socket.emit('sendMessage', message, ()=> {
             setMessage('')
         })
@@ -38,14 +72,17 @@ const Chat = ({location}) => {
 
     useEffect(() => {
         socket.on('message', (message) => {
+            console.log(message, message.text)
             setMessages([...messages, message])
         })
     }, [messages])
+
+    console.log(show)
     return (
         <div className="chat-container">
             <header className="chat-header">
             <h1><i className="fas fa-smile"></i> ChatCord</h1>
-            <a href="/" className="btn">Leave Room</a>
+            <Link to='/' className="btn">Leave Room</Link>
             </header>
             <main className="chat-main">
             <div className="chat-sidebar">
@@ -57,15 +94,39 @@ const Chat = ({location}) => {
             <Messages messages={messages} name={name}/>
             </main>
             <div className="chat-form-container">
-                <InputEmoji
-                    id="chat-form"
+            <div id="chat-form">
+                <TextareaAutosize
+                    className='text-message'
+                    style={{height: 'auto'}}
                     value={message}
-                    onChange={setMessage}
-                    onEnter={sendMessage}
-                    cleanOnEnter
-                    placeholder="Type a message"
-                >                   
-                </InputEmoji>                 
+                    onChange={onChangeMessage}
+                    onKeyUp={sendMessage}             
+                    id="msg"
+                    type="text"
+                    placeholder="Enter Message"
+                    required
+                    autoComplete="off"
+                />
+                <OutsideClickHandler
+                    onOutsideClick={handleOutSideClick}
+                >
+                    {show ? 
+                    <div className='picker' style={{ display: 'block'}}>
+                        <Picker onEmojiClick={onEmojiClick}/>        
+                    </div> :
+                    <div className='picker'>
+                        <Picker onEmojiClick={onEmojiClick}/>        
+                    </div> 
+                    }
+                    <button onClick={handleEmoji}>
+                        {String.fromCodePoint(0x1f60a)}
+                    </button>                    
+                </OutsideClickHandler>                
+                <button 
+                    className="btn"
+                    onClick={clickSendMessage}
+                ><i class="fas fa-paper-plane"></i> Send</button>    
+            </div>            
             </div>
         </div>
     )

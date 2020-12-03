@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Chat} from '../components/'
+import { Home, Chat} from '../components'
 import {
     BrowserRouter as Router,
     Switch,

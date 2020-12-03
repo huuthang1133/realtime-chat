@@ -116,11 +116,17 @@ a {
 	display: flex;
 }
 
-.chat-form-container input[type='text'] {
+#chat-form {
+	width: 100%;
+	display: flex;
+}
+
+.chat-form-container textarea[type='text'] {
 	font-size: 16px;
 	padding: 5px;
-	height: 40px;
+	/* height: 20px; */
 	flex: 1;
+	resize: none;
 }
 
 /* Join Page */
@@ -183,4 +189,20 @@ a {
 	.chat-sidebar {
 		display: none;
 	}
+}
+
+.text-message {
+	width: 90%
+}
+
+.picker {
+	z-index: 1;
+	position: absolute;
+	right: 420px;
+	top: 50px;
+	display: none;
+}
+
+button {
+	height: 100%
 }

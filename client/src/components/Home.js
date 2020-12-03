@@ -1,18 +1,40 @@
 import React, { useState } from 'react';
 import '../resources/Home.css'
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
     const [name, setName] = useState('')
-    const [room, setRoom] = useState('')
+	const [room, setRoom] = useState('')
+	
+	const notifyName = () => toast.error('Please Fill Name !')
+	const notifyRoom = () => toast.error('Please Fill Room !')
+	const notifySuccess = () => toast.success('Join Room Successfully !')
 
-    const onChange1 = (e) => {
+    const onChangeName = (e) => {
         setName(e.target.value)
     }
 
-    const onChange2 = (e) => {
-        setRoom(e.target.value)
-    }
+    const onChangeRoom = (e) => {
+		setRoom(e.target.value)
+	}
+	
+	const handleJoinChat = (e)=> {
+		if(!room.trim() || !name.trim()){
+			e.preventDefault();
+			if(!room.trim()){
+				notifyRoom()
+			}
+			if(!name.trim()){
+				notifyName()
+			}			
+		}
+		else {
+			notifySuccess()
+			return null;
+		}
+	}
 
     return (
 		<div className="join-container">
@@ -29,7 +51,7 @@ const Home = () => {
 							id="username"
 							placeholder="Enter username..."
                             required
-                            onChange={onChange1}
+                            onChange={onChangeName}
 						/>
 					</div>
 					<div className="form-control">
@@ -40,11 +62,12 @@ const Home = () => {
 							id="room"
 							placeholder="Enter room..."
                             required
-                            onChange={onChange2}
+                            onChange={onChangeRoom}
 						/>
 					</div>
                     <Link 
-                        onClick={e => (!name || !room) ? e.preventDefault() : null}
+						onClick={handleJoinChat}
+						// {e => (!name || !room) ? e.preventDefault() : null}
                         to={`/chat?name=${name}&room=${room}`}>
 					    <button type="submit" className="btn">Join Chat</button>
                     </Link>                    
