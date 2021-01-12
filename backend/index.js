@@ -4,7 +4,7 @@ const socketio = require('socket.io');
 const http = require('http');
 const router = require('./router')
 const { addUser, getUser, removeUser, getUsersInRoom } = require('./controllers/users');
-const formatMessage = require('./controllers/message.js')
+const  formatMessage  = require('./controllers/message.js')
 
 const PORT = process.env.PORT || 5000;
 
