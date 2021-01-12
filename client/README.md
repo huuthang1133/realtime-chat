@@ -7,7 +7,7 @@ This app use React on the front end, with NodeJS + Socket.io web socket library 
 
 ## Link Demo 
 
-[Realtime App chat](https://realtime-chat-petproject.netlify.app/)
+[Realtime App chat](https://nostalgic-pasteur-6fa8f0.netlify.app/)
 
 ## Set up
 
