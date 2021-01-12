@@ -8,7 +8,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import OutsideClickHandler from 'react-outside-click-handler';
 import '../resources/Home.css';
 
-const ENDPOINT = 'http://localhost:5000/';
+const ENDPOINT = 'https://realtim-chat-project.herokuapp.com/';
 let socket;
 
 const Chat = ({location}) => {
