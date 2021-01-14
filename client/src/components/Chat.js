@@ -72,17 +72,15 @@ const Chat = ({location}) => {
 
     useEffect(() => {
         socket.on('message', (message) => {
-            console.log(message, message.text)
             setMessages([...messages, message])
         })
     }, [messages])
 
-    console.log(show)
     return (
         <div className="chat-container">
             <header className="chat-header">
             <h1><i className="fas fa-smile"></i> ChatCord</h1>
-            <Link to='/' className="btn">Leave Room</Link>
+            <a href="/" className="btn">Leave Room</a> 
             </header>
             <main className="chat-main">
             <div className="chat-sidebar">
